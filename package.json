@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "sass-next-rbac",
   "private": true,
   "scripts": {
     "build": "turbo run build",
