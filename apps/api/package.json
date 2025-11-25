@@ -1,0 +1,23 @@
+{
+  "name": "@repo/api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@repo/auth": "*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config/node"
+    ]
+  },
+  "prettier": "@repo/prettier-config"
+}
