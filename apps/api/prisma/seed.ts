@@ -1,9 +1,8 @@
-import { PrismaClient } from '../src/generated/prisma/client.ts'
-import { env } from '../src/env/index.ts'
-import { PrismaPg } from '@prisma/adapter-pg'
 import { faker } from '@faker-js/faker'
+import { PrismaPg } from '@prisma/adapter-pg'
 import { hash } from 'bcryptjs'
-import { fa } from 'zod/v4/locales'
+import { env } from '../src/env/index.ts'
+import { PrismaClient } from '../src/generated/prisma/client.ts'
 
 const connectionString = `${env.DATABASE_URL}`
 
