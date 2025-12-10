@@ -14,6 +14,9 @@ import { authenticateWithPassword } from './routes/auth/authenticate-with-passwo
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { env } from '../env/index'
+import { requestPasswordRecovery } from './routes/auth/request-password-recovery'
+import { resetPassword } from './routes/auth/reset-password'
+import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -59,6 +62,9 @@ app.get('/health', (_, reply) => {
 app.register(createAccount)
 app.register(authenticateWithPassword)
 app.register(getProfile)
+app.register(requestPasswordRecovery)
+app.register(resetPassword)
+app.register(authenticateWithGithub)
 
 // Server start
 app

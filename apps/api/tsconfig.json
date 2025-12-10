@@ -1,6 +1,6 @@
 {
   "extends": "@repo/typescript-config/node.json",
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "@types/**/*"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "baseUrl": ".",
