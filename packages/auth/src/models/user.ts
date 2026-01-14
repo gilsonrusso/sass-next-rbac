@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { RoleSchema } from '../subjects/roles'
+import { RoleSchema } from '../roles'
 
 export const UserSchema = z.object({
   id: z.string(),

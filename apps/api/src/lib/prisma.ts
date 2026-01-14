@@ -1,5 +1,5 @@
+import { env } from '@repo/env'
 import { PrismaClient } from '../generated/prisma/client.ts'
-import { env } from '../env/index.ts'
 import { PrismaPg } from '@prisma/adapter-pg'
 
 // export const prismaClient = new PrismaClient({

@@ -13,10 +13,14 @@ import { errorHandler } from './error-handler'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
-import { env } from '../env/index'
 import { requestPasswordRecovery } from './routes/auth/request-password-recovery'
 import { resetPassword } from './routes/auth/reset-password'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { env } from '@repo/env'
+import { createOrganization } from './routes/orgs/create-organization'
+import { getMembership } from './routes/orgs/get-membership'
+import { getOrganizations } from './routes/orgs/get-organizations'
+import { getOrganization } from './routes/orgs/get-organization'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -40,6 +44,16 @@ app.register(fastifySwagger, {
       description: 'Full Stack Saas app with multi-tenant & RBAC',
       version: '1.0.0',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'JWT obtained from /auth/login',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -50,7 +64,7 @@ app.register(fastifySwaggerUI, {
 
 // JWT
 app.register(fastifyJwt, {
-  secret: env.SECRET_KEY ?? 'default_secret',
+  secret: env.JWT_SECRET ?? 'default_secret',
 })
 
 // Health check
@@ -65,10 +79,14 @@ app.register(getProfile)
 app.register(requestPasswordRecovery)
 app.register(resetPassword)
 app.register(authenticateWithGithub)
+app.register(createOrganization)
+app.register(getMembership)
+app.register(getOrganizations)
+app.register(getOrganization)
 
 // Server start
 app
-  .listen({ port: 3000, host: '0.0.0.0' })
+  .listen({ port: env.SERVER_PORT })
   .then((address) => {
     console.log(`Server listening at ${address}`)
   })
