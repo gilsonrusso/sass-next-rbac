@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { OrganizationSchema } from '../models/organization'
+import { OrganizationValidationSchema } from '../models/organization'
 
 export const OrganizationSubjectSchema = z.tuple([
   z.union([
@@ -9,7 +9,7 @@ export const OrganizationSubjectSchema = z.tuple([
     z.literal('delete'),
     z.literal('transfer_ownership'),
   ]),
-  z.union([z.literal('Organization'), OrganizationSchema]),
+  z.union([z.literal('Organization'), OrganizationValidationSchema]),
 ])
 
 export type OrganizationSubject = z.infer<typeof OrganizationSubjectSchema>

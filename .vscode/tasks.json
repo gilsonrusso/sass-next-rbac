@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "npm: dev",
+      "detail": "turbo run dev"
+    },
+    {
+      "type": "npm",
+      "script": "prisma:studio",
+      "path": "apps/api",
+      "problemMatcher": [],
+      "label": "npm: prisma:studio - apps/api",
+      "detail": "npm run env:load npx prisma studio"
+    },
+    {
+      "type": "npm",
+      "script": "dev:debug",
+      "path": "apps/api",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: dev:debug - apps/api",
+      "detail": "npm run env:load tsx watch --inspect-brk src/http/server.ts"
+    },
+    {
+      "type": "npm",
+      "script": "format",
+      "problemMatcher": [],
+      "label": "npm: format",
+      "detail": "prettier --write \"**/*.{ts,tsx,md}\""
+    }
+  ]
+}

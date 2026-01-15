@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npm run env:load tsx watch src/http/server.ts",
+    "dev:debug": "npm run env:load tsx watch --inspect-brk src/http/server.ts",
     "env:load": "dotenv -e ../../.env --",
     "prisma:generate": "npm run env:load npx prisma generate",
     "prisma:migrate:dev": "npm run env:load npx prisma migrate dev",
