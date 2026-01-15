@@ -7,7 +7,7 @@
     "env:load": "dotenv -e ../../.env --",
     "prisma:generate": "npm run env:load npx prisma generate",
     "prisma:migrate:dev": "npm run env:load npx prisma migrate dev",
-    "prisma:format": "npx prisma format",
+    "prisma:format": "npm run env:load npx prisma format",
     "prisma:studio": "npm run env:load npx prisma studio"
   },
   "dependencies": {
