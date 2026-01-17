@@ -2,6 +2,11 @@ import { authMiddleware } from '@/http/middlewares/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
+
+const getOrganizationParamsSchema = z.object({
+  slug: z.string().describe('The slug of the organization'),
+})
 
 export async function getOrganization(app: FastifyInstance) {
   app
@@ -11,12 +16,10 @@ export async function getOrganization(app: FastifyInstance) {
       '/organizations/:slug',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Get organization by slug',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string().describe('The slug of the organization'),
-          }),
+          params: getOrganizationParamsSchema,
           response: {
             200: z.object({
               organization: z.object({

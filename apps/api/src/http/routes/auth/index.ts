@@ -7,6 +7,8 @@ import { getProfile } from './get-profile'
 import { requestPasswordRecovery } from './request-password-recovery'
 import { resetPassword } from './reset-password'
 
+export const AUTH_SWAGGER_TAG = 'auth'
+
 export async function authRoutes(app: FastifyInstance) {
   app.register(authenticateWithGithub)
   app.register(authenticateWithPassword)

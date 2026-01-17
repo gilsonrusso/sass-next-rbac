@@ -1,10 +1,16 @@
 import { authMiddleware } from '@/http/middlewares/auth'
 import { prismaClient } from '@/lib/prisma'
+import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
 import { UnauthorizedError } from '../__errors/unauthorized-error'
-import { hash } from 'bcryptjs'
+
+const resetPasswordBodySchema = z.object({
+  code: z.uuid().describe('The password recovery code'),
+  password: z.string().min(6).describe('The new password'),
+})
 
 export async function resetPassword(app: FastifyInstance) {
   app
@@ -14,12 +20,9 @@ export async function resetPassword(app: FastifyInstance) {
       '/password/reset',
       {
         schema: {
-          tags: ['auth'],
+          tags: [AUTH_SWAGGER_TAG],
           summary: 'Reset user password using recovery code',
-          body: z.object({
-            code: z.uuid().describe('The password recovery code'),
-            password: z.string().min(6).describe('The new password'),
-          }),
+          body: resetPasswordBodySchema,
           response: {
             204: z.null(),
           },

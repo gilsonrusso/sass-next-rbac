@@ -1,20 +1,23 @@
+import { prismaClient } from '@/lib/prisma'
+import { env } from '@repo/env'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
 import { BadRequestError } from '../__errors/bad-request-error'
-import { prismaClient } from '@/lib/prisma'
-import { env } from '@repo/env'
+
+const authenticateWithGithubBodySchema = z.object({
+  code: z.string().describe('The GitHub OAuth code'),
+})
 
 export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/sessions/github',
     {
       schema: {
-        tags: ['auth'],
+        tags: [AUTH_SWAGGER_TAG],
         summary: 'Authenticate user with GitHub OAuth',
-        body: z.object({
-          code: z.string().describe('The GitHub OAuth code'),
-        }),
+        body: authenticateWithGithubBodySchema,
         response: {
           201: z.object({
             token: z.string().describe('The JWT token for authenticated user'),

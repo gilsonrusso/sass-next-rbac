@@ -1,10 +1,20 @@
 import { authMiddleware } from '@/http/middlewares/auth'
 import { prismaClient } from '@/lib/prisma'
+import { createSlug } from '@/utils/create-slug'
 import type { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
 import { BadRequestError } from '../__errors/bad-request-error'
-import { createSlug } from '@/utils/create-slug'
+
+const createOrganizationBodySchema = z.object({
+  name: z.string().describe('The name of the organization'),
+  domain: z.string().nullish().describe('The domain of the organization'),
+  shouldAttachUserByDomain: z
+    .boolean()
+    .optional()
+    .describe('Should attach the user to the organization by domain'),
+})
 
 export async function createOrganization(app: FastifyInstance) {
   app
@@ -14,20 +24,10 @@ export async function createOrganization(app: FastifyInstance) {
       '/organizations',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Create a new organization',
           security: [{ bearerAuth: [] }],
-          body: z.object({
-            name: z.string().describe('The name of the organization'),
-            domain: z
-              .string()
-              .nullish()
-              .describe('The domain of the organization'),
-            shouldAttachUserByDomain: z
-              .boolean()
-              .optional()
-              .describe('Should attach the user to the organization by domain'),
-          }),
+          body: createOrganizationBodySchema,
           response: {
             201: z.object({
               organizationId: z

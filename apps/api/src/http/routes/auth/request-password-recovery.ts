@@ -3,6 +3,11 @@ import { prismaClient } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
+
+const requestPasswordRecoveryBodySchema = z.object({
+  email: z.email().describe('The email of the user'),
+})
 
 export async function requestPasswordRecovery(app: FastifyInstance) {
   app
@@ -12,11 +17,9 @@ export async function requestPasswordRecovery(app: FastifyInstance) {
       '/password/recovery',
       {
         schema: {
-          tags: ['auth'],
+          tags: [AUTH_SWAGGER_TAG],
           summary: 'Request password recovery for a user',
-          body: z.object({
-            email: z.email().describe('The email of the user'),
-          }),
+          body: requestPasswordRecoveryBodySchema,
           response: {
             201: z.null(),
           },

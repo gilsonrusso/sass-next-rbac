@@ -3,19 +3,22 @@ import { compare } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
 import { BadRequestError } from '../__errors/bad-request-error'
+
+const authenticateWithPasswordBodySchema = z.object({
+  email: z.email().describe('The email of the user'),
+  password: z.string().describe('The password of the user'),
+})
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/sessions/password',
     {
       schema: {
-        tags: ['auth'],
+        tags: [AUTH_SWAGGER_TAG],
         summary: 'Authenticate user with email and password',
-        body: z.object({
-          email: z.email().describe('The email of the user'),
-          password: z.string().describe('The password of the user'),
-        }),
+        body: authenticateWithPasswordBodySchema,
         response: {
           201: z.object({
             token: z.string().describe('The JWT token for authenticated user'),

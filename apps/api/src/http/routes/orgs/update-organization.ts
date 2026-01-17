@@ -5,6 +5,7 @@ import { OrganizationValidationSchema } from '@repo/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
 import { UnauthorizedError } from '../__errors/unauthorized-error'
 
 const updateOrganizationBodySchema = z.object({
@@ -25,7 +26,7 @@ export async function updateOrganization(app: FastifyInstance) {
       '/organizations/:slug',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Update organization by slug',
           security: [{ bearerAuth: [] }],
           body: updateOrganizationBodySchema,

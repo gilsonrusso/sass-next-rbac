@@ -5,7 +5,10 @@ import { getMembership } from './get-membership'
 import { getOrganization } from './get-organization'
 import { getOrganizations } from './get-organizations'
 import { shutdownOrganization } from './shutdown-organization'
+import { transferOrganization } from './transfer-organization'
 import { updateOrganization } from './update-organization'
+
+export const ORGANIZATION_SWAGGER_TAG = 'organizations'
 
 export async function orgsRoutes(app: FastifyInstance) {
   app.register(createOrganization)
@@ -14,4 +17,5 @@ export async function orgsRoutes(app: FastifyInstance) {
   app.register(getOrganizations)
   app.register(shutdownOrganization)
   app.register(updateOrganization)
+  app.register(transferOrganization)
 }

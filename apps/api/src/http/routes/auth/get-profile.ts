@@ -1,9 +1,10 @@
+import { authMiddleware } from '@/http/middlewares/auth'
 import { prismaClient } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
 import { BadRequestError } from '../__errors/bad-request-error'
-import { authMiddleware } from '@/http/middlewares/auth'
 
 export async function getProfile(app: FastifyInstance) {
   app
@@ -13,7 +14,7 @@ export async function getProfile(app: FastifyInstance) {
       '/profile',
       {
         schema: {
-          tags: ['auth'],
+          tags: [AUTH_SWAGGER_TAG],
           summary: 'Get the profile of the authenticated user',
           security: [{ bearerAuth: [] }],
           response: {

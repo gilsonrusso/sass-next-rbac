@@ -97,6 +97,7 @@ model Member {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
+  @@unique([organizationId, userId])
   @@index([organizationId, userId])
   @@map("members")
 }

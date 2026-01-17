@@ -5,9 +5,10 @@ import { OrganizationValidationSchema } from '@repo/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
 import { UnauthorizedError } from '../__errors/unauthorized-error'
 
-const updateOrganizationParamsSchema = z.object({
+const shutdownOrganizationParamsSchema = z.object({
   slug: z.string().describe('The slug of the organization'),
 })
 
@@ -19,10 +20,10 @@ export async function shutdownOrganization(app: FastifyInstance) {
       '/organizations/:slug',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Shutdown organization by slug',
           security: [{ bearerAuth: [] }],
-          params: updateOrganizationParamsSchema,
+          params: shutdownOrganizationParamsSchema,
           response: {
             204: z.null(),
           },

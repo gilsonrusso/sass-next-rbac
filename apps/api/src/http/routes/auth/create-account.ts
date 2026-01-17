@@ -3,24 +3,23 @@ import { hash } from 'bcryptjs'
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { AUTH_SWAGGER_TAG } from '.'
 import { BadRequestError } from '../__errors/bad-request-error'
 
-const authenticateBodySchema = z.object({
+const createAccountBodySchema = z.object({
   name: z.string(),
   email: z.email(),
   password: z.string().min(6),
 })
-
-const AUTH_TAG = 'Autenticação'
 
 export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/users',
     {
       schema: {
-        tags: [AUTH_TAG],
+        tags: [AUTH_SWAGGER_TAG],
         summary: 'Cria uma nova conta de usuário',
-        body: authenticateBodySchema,
+        body: createAccountBodySchema,
       },
     },
     async (request, reply) => {

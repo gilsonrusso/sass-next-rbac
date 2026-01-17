@@ -4,6 +4,7 @@ import { RoleSchema } from '@repo/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
 
 export async function getOrganizations(app: FastifyInstance) {
   app
@@ -13,7 +14,7 @@ export async function getOrganizations(app: FastifyInstance) {
       '/organizations',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Get organizations where the user is a member',
           security: [{ bearerAuth: [] }],
           response: {

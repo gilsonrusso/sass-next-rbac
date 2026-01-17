@@ -1,9 +1,13 @@
+import { authMiddleware } from '@/http/middlewares/auth'
+import { RoleSchema } from '@repo/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { authMiddleware } from '@/http/middlewares/auth'
 import { z } from 'zod'
-import { prismaClient } from '@/lib/prisma'
-import { RoleSchema } from '@repo/auth'
+import { ORGANIZATION_SWAGGER_TAG } from '.'
+
+const getMembershipParamsSchema = z.object({
+  slug: z.string().describe('The slug of the organization'),
+})
 
 export async function getMembership(app: FastifyInstance) {
   app
@@ -13,12 +17,10 @@ export async function getMembership(app: FastifyInstance) {
       '/organization/:slug/membership',
       {
         schema: {
-          tags: ['organizations'],
+          tags: [ORGANIZATION_SWAGGER_TAG],
           summary: 'Get membership of the organization',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string().describe('The slug of the organization'),
-          }),
+          params: getMembershipParamsSchema,
           response: {
             200: z.object({
               membership: z.object({
