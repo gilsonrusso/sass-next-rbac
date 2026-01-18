@@ -13,6 +13,7 @@ import {
 import { errorHandler } from './error-handler'
 import { authRoutes } from './routes/auth/index'
 import { orgsRoutes } from './routes/orgs/index'
+import { projectsRoutes } from './routes/projects'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -67,6 +68,7 @@ app.get('/health', (_, reply) => {
 // Routes
 app.register(authRoutes)
 app.register(orgsRoutes)
+app.register(projectsRoutes)
 
 // Server start
 app
